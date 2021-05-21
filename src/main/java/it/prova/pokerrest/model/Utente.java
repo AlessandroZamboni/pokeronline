@@ -41,7 +41,6 @@ public class Utente {
     @Enumerated(EnumType.STRING)
     private StatoUtente stato = StatoUtente.CREATO;
 
-    @NotNull(message = "{dateCreated.notnull}")
     @Column(name = "date_created")
     private Date dateCreated;
 
@@ -178,6 +177,14 @@ public class Utente {
 
     public void setRuoli(Set<Ruolo> ruoli) {
         this.ruoli = ruoli;
+    }
+
+    public boolean isAdmin() {
+        for (Ruolo ruoloItem : ruoli) {
+            if (ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
+                return true;
+        }
+        return false;
     }
 
     @Override

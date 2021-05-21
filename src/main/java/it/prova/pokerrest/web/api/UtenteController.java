@@ -2,6 +2,7 @@ package it.prova.pokerrest.web.api;
 
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.utente.UtenteService;
+import it.prova.pokerrest.web.api.exception.UtenteIsNotAdminException;
 import it.prova.pokerrest.web.api.exception.UtenteNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,54 +21,77 @@ public class UtenteController {
     @GetMapping
     public List<Utente> getAll(@RequestHeader("Authorization") String message) {
         Utente utente = utenteService.findByUsername(message);
-
-        
-
-        return utenteService.listAllElements();
+        if(utente.isAdmin())
+            return utenteService.listAllElements();
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
     }
 
     // gli errori di validazione vengono mostrati con 400 Bad Request ma
     // elencandoli grazie al ControllerAdvice
     @PostMapping
-    public Utente createNew(@Valid @RequestBody Utente utenteInput) {
-        return utenteService.inserisciNuovo(utenteInput);
+    public Utente createNew(@Valid @RequestBody Utente utenteInput, @RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+        if(utente.isAdmin())
+            utenteInput = utenteService.inserisciNuovo(utenteInput);
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+
+        return utenteInput;
     }
 
     @GetMapping("/{id}")
-    public Utente findById(@PathVariable(value = "id", required = true) long id) {
-        Utente utente = utenteService.caricaSingoloElemento(id);
+    public Utente findById(@PathVariable(value = "id", required = true) long id, @RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+        Utente utenteCaricato = null;
+        if(utente.isAdmin())
+            utenteCaricato = utenteService.caricaSingoloElemento(id);
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
 
-        if (utente == null)
-            throw new UtenteNotFoundException("Utente not found con id: " + id);
+        if (utenteCaricato == null)
+            throw new UtenteNotFoundException("Utente not found, id: " + id);
 
-        return utente;
+        return utenteCaricato;
     }
 
     @PutMapping("/{id}")
-    public Utente update(@Valid @RequestBody Utente registaInput, @PathVariable(required = true) Long id) {
-        Utente utente = utenteService.caricaSingoloElemento(id);
+    public Utente update(@Valid @RequestBody Utente utenteInput, @PathVariable(required = true) Long id,  @RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+        if(utente.isAdmin())
+            utenteInput = utenteService.aggiorna(utenteInput);
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
 
-        if (utente == null)
-            throw new UtenteNotFoundException("Utente not found con id: " + id);
+        if (utenteInput == null)
+            throw new UtenteNotFoundException("Utente not found, id: " + id);
 
-        registaInput.setId(id);
-        return utenteService.aggiorna(registaInput);
+        return utenteInput;
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable(required = true) Long id) {
-        Utente utente = utenteService.caricaSingoloElemento(id);
+    public void delete(@PathVariable(required = true) Long id, @RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+        Utente utenteCaricato = null;
+        if(utente.isAdmin())
+            utenteCaricato = utenteService.caricaSingoloElemento(id);
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
 
-        if (utente == null)
-            throw new UtenteNotFoundException("Utente not found con id: " + id);
+        if (utenteCaricato == null)
+            throw new UtenteNotFoundException("Utente not found, id: " + id);
 
         utenteService.rimuovi(utente);
     }
 
     @PostMapping("/search")
-    public List<Utente> search(@RequestBody Utente example) {
-        return utenteService.findByExample(example);
+    public List<Utente> search(@RequestBody Utente example,@RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+        if(utente.isAdmin())
+            return utenteService.findByExample(example);
+        else
+            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
     }
 
 

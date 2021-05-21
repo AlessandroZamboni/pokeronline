@@ -1,7 +1,5 @@
 package it.prova.pokerrest.service.utente;
 
-import it.prova.pokerrest.model.Ruolo;
-import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.repository.ruolo.RuoloRepository;
 import it.prova.pokerrest.repository.utente.UtenteRepository;
@@ -23,12 +21,12 @@ public class UtenteServiceImpl implements UtenteService {
 
     @Override
     public List<Utente> listAllElements() {
-        return null;
+        return (List<Utente>) repository.findAll();
     }
 
     @Override
     public Utente caricaSingoloElemento(Long id) {
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     @Override
@@ -38,22 +36,23 @@ public class UtenteServiceImpl implements UtenteService {
 
     @Override
     public Utente aggiorna(Utente utenteInstance) {
-        return null;
-    }
-
-    @Override
-    public Utente inserisciNuovo(Utente utenteInstance) {
         return repository.save(utenteInstance);
     }
 
     @Override
-    public void rimuovi(Utente filmInstance) {
+    public Utente inserisciNuovo(Utente utenteInstance) {
+        utenteInstance.setDateCreated(new Date());
+        return repository.save(utenteInstance);
+    }
 
+    @Override
+    public void rimuovi(Utente utenteInstance) {
+        repository.delete(utenteInstance);
     }
 
     @Override
     public List<Utente> findByExample(Utente example) {
-        return null;
+        return repository.findByExample(example);
     }
 
     @Override
