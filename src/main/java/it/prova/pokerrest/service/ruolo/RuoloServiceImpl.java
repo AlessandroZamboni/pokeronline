@@ -13,42 +13,44 @@ import java.util.List;
 public class RuoloServiceImpl implements RuoloService {
 
     @Autowired
-    private RuoloRepository ruoloRepository;
+    private RuoloRepository repository;
+
 
     @Override
-    public List<Ruolo> listAll() {
-        return (List<Ruolo>) ruoloRepository.findAll();
+    public List<Ruolo> listAllElements() {
+        return (List<Ruolo>) repository.findAll();
     }
 
     @Override
     public Ruolo caricaSingoloElemento(Long id) {
-        return ruoloRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public void aggiorna(Ruolo ruoloInstance) {
-        ruoloRepository.save(ruoloInstance);
+    public Ruolo aggiorna(Ruolo ruoloInstance) {
+        return repository.save(ruoloInstance);
     }
 
     @Override
-    public void inserisciNuovo(Ruolo ruoloInstance) {
-        ruoloRepository.save(ruoloInstance);
+    public Ruolo inserisciNuovo(Ruolo ruoloInstance) {
+        return repository.save(ruoloInstance);
     }
 
     @Override
     public void rimuovi(Ruolo ruoloInstance) {
-        ruoloRepository.delete(ruoloInstance);
+        repository.delete(ruoloInstance);
     }
+
     @Transactional(readOnly = true)
     public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) {
-        return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
+        return repository.findByDescrizioneAndCodice(descrizione, codice);
     }
     @Transactional(readOnly = true)
     public List<Ruolo> findByArrayIdParam(String[] ids) {
         List<Ruolo> ruoli = new ArrayList<>();
         if (ids != null && ids.length > 0) {
             for (String ruoloItem : ids) {
-                ruoli.add(ruoloRepository.findById(Long.parseLong(ruoloItem)).orElse(null));
+                ruoli.add(repository.findById(Long.parseLong(ruoloItem)).orElse(null));
             }
         }
         return ruoli;

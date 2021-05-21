@@ -19,7 +19,8 @@ public class CustomUtenteRepositoryImpl implements CustomUtenteRepository {
         Map<String, Object> paramaterMap = new HashMap<String, Object>();
         List<String> whereClauses = new ArrayList<String>();
 
-        StringBuilder queryBuilder = new StringBuilder("select u from Utente u left join fetch u.ruoli r where u.id = u.id ");
+        StringBuilder queryBuilder = new StringBuilder("select u from Utente u left join fetch u.ruoli r " +
+                "left join fetch u.tavolo t where u.id = u.id ");
 
         if (StringUtils.isNotEmpty(example.getNome())) {
             whereClauses.add(" u.nome like :nome ");
@@ -33,6 +34,22 @@ public class CustomUtenteRepositoryImpl implements CustomUtenteRepository {
             whereClauses.add(" u.username like :username ");
             paramaterMap.put("username", "%" + example.getUsername() + "%");
         }
+
+        if (example.getEsperienzaAccumulata() != null) {
+            whereClauses.add("u.esperienzaAccumulata >= :esperienzaAccumulata ");
+            paramaterMap.put("esperienzaAccumulata", example.getEsperienzaAccumulata());
+        }
+
+        if (example.getCreditoResiduo() != null) {
+            whereClauses.add("u.creditoResiduo >= :creditoResiduo ");
+            paramaterMap.put("creditoResiduo", example.getCreditoResiduo());
+        }
+
+        if (example.getTavolo() != null) {
+            whereClauses.add("t = :tavolo ");
+            paramaterMap.put("tavolo", example.getTavolo());
+        }
+
         if (example.getDateCreated() != null) {
             whereClauses.add("u.dateCreated >= :dateCreated ");
             paramaterMap.put("dateCreated", example.getDateCreated());

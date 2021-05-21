@@ -6,17 +6,15 @@ import java.util.List;
 
 public interface TavoloService {
 
-    public List<Tavolo> listAllElements();
+    List<Tavolo> listAllElements();
 
-    public Tavolo caricaSingoloElemento(Long id);
+    Tavolo caricaSingoloElemento(Long id);
 
-    Tavolo caricaSingoloElementoEager(Long id);
+    Tavolo aggiorna(Tavolo tavoloInstance);
 
-    public void aggiorna(Tavolo annuncioInstance);
+    Tavolo inserisciNuovo(Tavolo tavoloInstance);
 
-    public void inserisciNuovo(Tavolo annuncioInstance);
-
-    public void rimuovi(Tavolo annuncioInstance);
+    void rimuovi(Tavolo tavoloInstance);
 
     public List<Tavolo> findByExample(Tavolo example);
 

@@ -6,16 +6,15 @@ import it.prova.pokerrest.model.Ruolo;
 import java.util.List;
 
 public interface RuoloService {
-    public List<Ruolo> listAll();
+    List<Ruolo> listAllElements();
 
-    public Ruolo caricaSingoloElemento(Long id);
+    Ruolo caricaSingoloElemento(Long id);
 
+    Ruolo aggiorna(Ruolo ruoloInstance);
 
-    public void aggiorna(Ruolo ruoloInstance);
+    Ruolo inserisciNuovo(Ruolo ruoloInstance);
 
-    public void inserisciNuovo(Ruolo ruoloInstance);
-
-    public void rimuovi(Ruolo ruoloInstance);
+    void rimuovi(Ruolo ruoloInstance);
 
     //  public List<Acquisto> findByExample(Acquisto example);
     public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) ;

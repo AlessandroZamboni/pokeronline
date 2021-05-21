@@ -1,47 +1,51 @@
 package it.prova.pokerrest.service.tavolo;
 
 import it.prova.pokerrest.model.Tavolo;
+import it.prova.pokerrest.repository.tavolo.TavoloRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TavoloServiceImpl implements TavoloService {
+
+    @Autowired
+    private TavoloRepository repository;
+
     @Override
     public List<Tavolo> listAllElements() {
-        return null;
+        return (List<Tavolo>) repository.findAll();
     }
 
     @Override
     public Tavolo caricaSingoloElemento(Long id) {
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Tavolo caricaSingoloElementoEager(Long id) {
-        return null;
+    public Tavolo caricaSingoloAnnuncioEager(Long idTavolo) {
+        return repository.findSingleTavoloEager(idTavolo);
     }
 
     @Override
-    public void aggiorna(Tavolo annuncioInstance) {
-
+    public Tavolo aggiorna(Tavolo tavoloInstance) {
+        return repository.save(tavoloInstance);
     }
 
     @Override
-    public void inserisciNuovo(Tavolo annuncioInstance) {
-
+    public Tavolo inserisciNuovo(Tavolo tavoloInstance) {
+        return repository.save(tavoloInstance);
     }
 
     @Override
-    public void rimuovi(Tavolo annuncioInstance) {
-
+    public void rimuovi(Tavolo tavoloInstance) {
+        repository.delete(tavoloInstance);
     }
 
     @Override
     public List<Tavolo> findByExample(Tavolo example) {
-        return null;
+        return repository.findByExample(example);
     }
 
-    @Override
-    public Tavolo caricaSingoloAnnuncioEager(Long idAnnuncio) {
-        return null;
-    }
 }

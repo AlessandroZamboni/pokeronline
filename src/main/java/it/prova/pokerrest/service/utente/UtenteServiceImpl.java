@@ -6,11 +6,13 @@ import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.repository.ruolo.RuoloRepository;
 import it.prova.pokerrest.repository.utente.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
