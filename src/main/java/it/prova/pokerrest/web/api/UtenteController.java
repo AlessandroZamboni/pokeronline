@@ -18,7 +18,11 @@ public class UtenteController {
     private UtenteService utenteService;
 
     @GetMapping
-    public List<Utente> getAll() {
+    public List<Utente> getAll(@RequestHeader("Authorization") String message) {
+        Utente utente = utenteService.findByUsername(message);
+
+        
+
         return utenteService.listAllElements();
     }
 

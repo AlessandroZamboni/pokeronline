@@ -54,6 +54,7 @@ public class Tavolo {
 
     @JsonIgnoreProperties(value= {"tavolo"})
     @ManyToOne
+    @NotNull(message = "{utenteCreazione.notnull}")
     @JoinColumn(name="utente_creazione_id")
     private Utente utenteCreazione;
 

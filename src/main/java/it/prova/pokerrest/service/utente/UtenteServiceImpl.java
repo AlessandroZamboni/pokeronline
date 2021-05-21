@@ -16,7 +16,7 @@ import java.util.List;
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
-    private UtenteRepository utenteRepository;
+    private UtenteRepository repository;
 
     @Autowired
     private RuoloRepository ruoloRepository;
@@ -43,7 +43,7 @@ public class UtenteServiceImpl implements UtenteService {
 
     @Override
     public Utente inserisciNuovo(Utente utenteInstance) {
-        return null;
+        return repository.save(utenteInstance);
     }
 
     @Override
@@ -54,5 +54,10 @@ public class UtenteServiceImpl implements UtenteService {
     @Override
     public List<Utente> findByExample(Utente example) {
         return null;
+    }
+
+    @Override
+    public Utente findByUsername(String user) {
+        return repository.findByUsername(user).orElse(null);
     }
 }

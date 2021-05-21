@@ -39,7 +39,7 @@ public class Utente {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private StatoUtente stato;
+    private StatoUtente stato = StatoUtente.CREATO;
 
     @NotNull(message = "{dateCreated.notnull}")
     @Column(name = "date_created")
@@ -58,7 +58,6 @@ public class Utente {
     private Tavolo tavoloCreato;
 
     @JsonIgnoreProperties(value= {"utenteCrezione","giocatori"})
-    @NotNull(message = "{tavolo.notnull}")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tavolo_id")
     private Tavolo tavolo;
@@ -81,6 +80,16 @@ public class Utente {
         this.esperienzaAccumulata = esperienzaAccumulata;
         this.tavolo = tavolo;
         this.ruoli = ruoli;
+    }
+
+    public Utente(String username, String password, String nome, String cognome, Date dateCreated, Double creditoResiduo, Double esperienzaAccumulata) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.username = username;
+        this.password = password;
+        this.dateCreated = dateCreated;
+        this.creditoResiduo = creditoResiduo;
+        this.esperienzaAccumulata = esperienzaAccumulata;
     }
 
     public Long getId() {
