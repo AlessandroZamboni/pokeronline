@@ -2,7 +2,8 @@ package it.prova.pokerrest.web.api;
 
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.utente.UtenteService;
-import it.prova.pokerrest.web.api.exception.UtenteIsNotAdminException;
+import it.prova.pokerrest.web.api.exception.UtenteNotAuthorized;
+import it.prova.pokerrest.web.api.exception.UtenteNotAuthorized;
 import it.prova.pokerrest.web.api.exception.UtenteNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UtenteController {
         if(utente.isAdmin())
             return utenteService.listAllElements();
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente not authorized, id: "+utente.getId());
     }
 
     // gli errori di validazione vengono mostrati con 400 Bad Request ma
@@ -35,7 +36,7 @@ public class UtenteController {
         if(utente.isAdmin())
             utenteInput = utenteService.inserisciNuovo(utenteInput);
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente not authorized, id: "+utente.getId());
 
         return utenteInput;
     }
@@ -47,10 +48,10 @@ public class UtenteController {
         if(utente.isAdmin())
             utenteCaricato = utenteService.caricaSingoloElemento(id);
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente is not admin, id: "+utente.getId());
 
         if (utenteCaricato == null)
-            throw new UtenteNotFoundException("Utente not found, id: " + id);
+            throw new UtenteNotFoundException("Utente not authorized, id: " + id);
 
         return utenteCaricato;
     }
@@ -61,7 +62,7 @@ public class UtenteController {
         if(utente.isAdmin())
             utenteInput = utenteService.aggiorna(utenteInput);
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente not authorized, id: "+utente.getId());
 
         if (utenteInput == null)
             throw new UtenteNotFoundException("Utente not found, id: " + id);
@@ -77,7 +78,7 @@ public class UtenteController {
         if(utente.isAdmin())
             utenteCaricato = utenteService.caricaSingoloElemento(id);
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente not authorized, id: "+utente.getId());
 
         if (utenteCaricato == null)
             throw new UtenteNotFoundException("Utente not found, id: " + id);
@@ -91,7 +92,7 @@ public class UtenteController {
         if(utente.isAdmin())
             return utenteService.findByExample(example);
         else
-            throw new UtenteIsNotAdminException("Utente is not admin, id: "+utente.getId());
+            throw new UtenteNotAuthorized("Utente not authorized, id: "+utente.getId());
     }
 
 

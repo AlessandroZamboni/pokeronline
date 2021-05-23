@@ -59,4 +59,6 @@ public class UtenteServiceImpl implements UtenteService {
     public Utente findByUsername(String user) {
         return repository.findByUsername(user).orElse(null);
     }
+
+
 }

@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
-public class UtenteIsNotAdminException extends RuntimeException {
+public class UtenteNotAuthorized extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public UtenteIsNotAdminException(String message) {
+    public UtenteNotAuthorized(String message) {
         super(message);
     }
 }

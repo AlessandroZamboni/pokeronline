@@ -1,6 +1,7 @@
 package it.prova.pokerrest.service.tavolo;
 
 import it.prova.pokerrest.model.Tavolo;
+import it.prova.pokerrest.model.Utente;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface TavoloService {
     public List<Tavolo> findByExample(Tavolo example);
 
     Tavolo caricaSingoloAnnuncioEager(Long idAnnuncio);
+
+    List<Tavolo> findByUtenteCreazione(Utente utenteCreazione);
 
 }

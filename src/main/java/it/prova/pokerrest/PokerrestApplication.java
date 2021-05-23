@@ -34,37 +34,33 @@ public class PokerrestApplication implements CommandLineRunner {
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Player User", "ROLE_PLAYER") == null) {
 			ruoloServiceInstance.inserisciNuovo(new Ruolo("Player User", "ROLE_PLAYER"));
 		}
+		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player User", "ROLE_SPECIAL_PLAYER") == null) {
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("Special Player User", "ROLE_SPECIAL_PLAYER"));
+		}
 
-		//A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO ANCHE PER
-		//PASSWORD OGNI VOLTA NE INSERISCE UNO NUOVO
+		// A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO
+		// ANCHE PER
+		// PASSWORD OGNI VOLTA NE INSERISCE UNO NUOVO
 		if (utenteServiceInstance.findByUsername("admin") == null) {
-			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(),0.0,0.0);
+			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(), 0.0, 0.0);
 			admin.setStato(StatoUtente.ATTIVO);
 			admin.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", "ROLE_ADMIN"));
 			utenteServiceInstance.inserisciNuovo(admin);
 		}
 
-		if (utenteServiceInstance.findByUsername("user") == null) {
-			Utente player = new Utente("user", "user", "Antonio", "Verdi", new Date(),0.0,0.0);
+		if (utenteServiceInstance.findByUsername("player") == null) {
+			Utente player = new Utente("player", "asd", "Antonio", "Verdi", new Date(), 0.0, 0.0);
 			player.setStato(StatoUtente.ATTIVO);
 			player.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Player User", "ROLE_PLAYER"));
 			utenteServiceInstance.inserisciNuovo(player);
 		}
 
-		if (utenteServiceInstance.findByUsername("user1") == null) {
-			Utente player1 = new Utente("user1", "user1", "Antonioo", "Verdii", new Date(),0.0,0.0);
+		if (utenteServiceInstance.findByUsername("SuperPlayer") == null) {
+			Utente player1 = new Utente("SuperPlayer", "asd", "Antonioo", "Verdii", new Date(), 0.0, 0.0);
 			player1.setStato(StatoUtente.ATTIVO);
 			player1.getRuoli()
-					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
+					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player User", "ROLE_SPECIAL_PLAYER"));
 			utenteServiceInstance.inserisciNuovo(player1);
-		}
-
-		if (utenteServiceInstance.findByUsername("user2") == null) {
-			Utente player2 = new Utente("user2","user2", "Antoniooo", "Verdiii", new Date(),0.0,0.0);
-			player2.setStato(StatoUtente.ATTIVO);
-			player2.getRuoli()
-					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
-			utenteServiceInstance.inserisciNuovo(player2);
 		}
 	}
 }

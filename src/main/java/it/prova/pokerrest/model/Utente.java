@@ -183,6 +183,14 @@ public class Utente {
         return false;
     }
 
+    public boolean isSpecialPlayer() {
+        for (Ruolo ruoloItem : ruoli) {
+            if (ruoloItem.getCodice().equals(Ruolo.ROLE_SPECIAL_PLAYER))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Utente{" +

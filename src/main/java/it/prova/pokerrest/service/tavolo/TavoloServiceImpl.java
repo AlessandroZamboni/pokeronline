@@ -1,6 +1,7 @@
 package it.prova.pokerrest.service.tavolo;
 
 import it.prova.pokerrest.model.Tavolo;
+import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.repository.tavolo.TavoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class TavoloServiceImpl implements TavoloService {
     @Override
     public Tavolo caricaSingoloAnnuncioEager(Long idTavolo) {
         return repository.findSingleTavoloEager(idTavolo);
+    }
+
+    @Override
+    public List<Tavolo> findByUtenteCreazione(Utente utenteCreazione) {
+        return repository.findByUtenteCreazione(utenteCreazione);
     }
 
     @Override
