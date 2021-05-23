@@ -82,7 +82,7 @@ public class UtenteController {
         if (utenteCaricato == null)
             throw new UtenteNotFoundException("Utente not found, id: " + id);
 
-        utenteService.rimuovi(utente);
+        utenteService.rimuovi(utenteCaricato);
     }
 
     @PostMapping("/search")

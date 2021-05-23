@@ -52,10 +52,6 @@ public class Utente {
     @Column(name = "esperienza_accumulata")
     private Double esperienzaAccumulata;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tavolo_creato_id")
-    private Tavolo tavoloCreato;
-
     @JsonIgnoreProperties(value= {"utenteCrezione","giocatori"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tavolo_id")

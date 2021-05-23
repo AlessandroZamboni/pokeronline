@@ -39,15 +39,6 @@ public class Tavolo {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @NotNull(message = "{creditoResiduo.notnull}")
-    @Column(name = "credito_residuo")
-    private Double creditoResiduo;
-
-    @NotNull(message = "{esperienzaAccumulata.notnull}")
-    @Min(value = 0)
-    @Column(name = "esperienza_accumulata")
-    private Double esperienzaAccumulata;
-
     @JsonIgnoreProperties(value= {"tavolo"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tavolo")
     private Set<Utente> giocatori = new HashSet<>();
@@ -67,8 +58,6 @@ public class Tavolo {
         this.cifraMinima = cifraMinima;
         this.denominazione = denominazione;
         this.dateCreated = dateCreated;
-        this.creditoResiduo = creditoResiduo;
-        this.esperienzaAccumulata = esperienzaAccumulata;
         this.giocatori = giocatori;
         this.utenteCreazione = utenteCreazione;
     }
@@ -113,22 +102,6 @@ public class Tavolo {
         this.dateCreated = dateCreated;
     }
 
-    public Double getCreditoResiduo() {
-        return creditoResiduo;
-    }
-
-    public void setCreditoResiduo(Double creditoResiduo) {
-        this.creditoResiduo = creditoResiduo;
-    }
-
-    public Double getEsperienzaAccumulata() {
-        return esperienzaAccumulata;
-    }
-
-    public void setEsperienzaAccumulata(Double esperienzaAccumulata) {
-        this.esperienzaAccumulata = esperienzaAccumulata;
-    }
-
     public Set<Utente> getGiocatori() {
         return giocatori;
     }
@@ -153,8 +126,6 @@ public class Tavolo {
                 ", cifraMinima=" + cifraMinima +
                 ", denominazione='" + denominazione + '\'' +
                 ", dateCreated=" + dateCreated +
-                ", creditoResiduo=" + creditoResiduo +
-                ", esperienzaAccumulata=" + esperienzaAccumulata +
                 '}';
     }
 }
