@@ -2,8 +2,10 @@ package it.prova.pokerrest;
 
 import it.prova.pokerrest.model.Ruolo;
 import it.prova.pokerrest.model.StatoUtente;
+import it.prova.pokerrest.model.Tavolo;
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.ruolo.RuoloService;
+import it.prova.pokerrest.service.tavolo.TavoloService;
 import it.prova.pokerrest.service.utente.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,9 @@ public class PokerrestApplication implements CommandLineRunner {
 	private RuoloService ruoloServiceInstance;
 	@Autowired
 	private UtenteService utenteServiceInstance;
+
+	@Autowired
+	private TavoloService tavoloServiceInstance;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PokerrestApplication.class, args);
@@ -41,8 +46,9 @@ public class PokerrestApplication implements CommandLineRunner {
 		// A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO
 		// ANCHE PER
 		// PASSWORD OGNI VOLTA NE INSERISCE UNO NUOVO
+		Utente admin = null;
 		if (utenteServiceInstance.findByUsername("admin") == null) {
-			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(), 0.0, 0.0);
+			admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(), 0.0, 0.0);
 			admin.setStato(StatoUtente.ATTIVO);
 			admin.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", "ROLE_ADMIN"));
 			utenteServiceInstance.inserisciNuovo(admin);
@@ -62,5 +68,8 @@ public class PokerrestApplication implements CommandLineRunner {
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player User", "ROLE_SPECIAL_PLAYER"));
 			utenteServiceInstance.inserisciNuovo(player1);
 		}
+
+		//tavoloServiceInstance.inserisciNuovo(new Tavolo(0d,0d,"Primo Tavolo",new Date(),admin));
+
 	}
 }

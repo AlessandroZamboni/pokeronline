@@ -19,7 +19,7 @@ public interface TavoloService {
 
     public List<Tavolo> findByExample(Tavolo example);
 
-    Tavolo caricaSingoloAnnuncioEager(Long idAnnuncio);
+    Tavolo caricaSingoloTavoloEager(Long idAnnuncio);
 
     List<Tavolo> findByUtenteCreazione(Utente utenteCreazione);
 

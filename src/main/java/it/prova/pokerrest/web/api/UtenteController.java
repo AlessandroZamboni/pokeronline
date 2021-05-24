@@ -1,5 +1,6 @@
 package it.prova.pokerrest.web.api;
 
+import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.utente.UtenteService;
 import it.prova.pokerrest.web.api.exception.UtenteNotAuthorized;
@@ -72,7 +73,7 @@ public class UtenteController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable(required = true) Long id, @RequestHeader("Authorization") String message) {
+    public void changeStatus(@PathVariable(required = true) Long id, @RequestHeader("Authorization") String message) {
         Utente utente = utenteService.findByUsername(message);
         Utente utenteCaricato = null;
         if(utente.isAdmin())
@@ -83,7 +84,11 @@ public class UtenteController {
         if (utenteCaricato == null)
             throw new UtenteNotFoundException("Utente not found, id: " + id);
 
-        utenteService.rimuovi(utenteCaricato);
+       if(utenteCaricato.getStato().equals(StatoUtente.ATTIVO))
+           utenteService.disabilita(utenteCaricato);
+       else
+           utenteService.abilita(utenteCaricato);
+
     }
 
     @PostMapping("/search")

@@ -192,6 +192,44 @@ public class Utente {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Utente utente = (Utente) o;
+
+        if (id != null ? !id.equals(utente.id) : utente.id != null) return false;
+        if (nome != null ? !nome.equals(utente.nome) : utente.nome != null) return false;
+        if (cognome != null ? !cognome.equals(utente.cognome) : utente.cognome != null) return false;
+        if (username != null ? !username.equals(utente.username) : utente.username != null) return false;
+        if (password != null ? !password.equals(utente.password) : utente.password != null) return false;
+        if (stato != utente.stato) return false;
+        if (dateCreated != null ? !dateCreated.equals(utente.dateCreated) : utente.dateCreated != null) return false;
+        if (creditoResiduo != null ? !creditoResiduo.equals(utente.creditoResiduo) : utente.creditoResiduo != null)
+            return false;
+        if (esperienzaAccumulata != null ? !esperienzaAccumulata.equals(utente.esperienzaAccumulata) : utente.esperienzaAccumulata != null)
+            return false;
+        if (tavolo != null ? !tavolo.equals(utente.tavolo) : utente.tavolo != null) return false;
+        return ruoli != null ? ruoli.equals(utente.ruoli) : utente.ruoli == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (cognome != null ? cognome.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (stato != null ? stato.hashCode() : 0);
+        result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
+        result = 31 * result + (creditoResiduo != null ? creditoResiduo.hashCode() : 0);
+        result = 31 * result + (esperienzaAccumulata != null ? esperienzaAccumulata.hashCode() : 0);
+        result = 31 * result + (tavolo != null ? tavolo.hashCode() : 0);
+        result = 31 * result + (ruoli != null ? ruoli.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Utente{" +
                 "id=" + id +

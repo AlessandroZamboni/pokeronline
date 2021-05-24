@@ -35,7 +35,6 @@ public class Tavolo {
     @Column(name = "denominazione")
     private String denominazione;
 
-    @NotNull(message = "{dateCreated.notnull}")
     @Column(name = "date_created")
     private Date dateCreated;
 
@@ -59,6 +58,14 @@ public class Tavolo {
         this.denominazione = denominazione;
         this.dateCreated = dateCreated;
         this.giocatori = giocatori;
+        this.utenteCreazione = utenteCreazione;
+    }
+
+    public Tavolo(Double esperienzaMin, Double cifraMinima, String denominazione, Date dateCreated, Utente utenteCreazione) {
+        this.esperienzaMin = esperienzaMin;
+        this.cifraMinima = cifraMinima;
+        this.denominazione = denominazione;
+        this.dateCreated = dateCreated;
         this.utenteCreazione = utenteCreazione;
     }
 

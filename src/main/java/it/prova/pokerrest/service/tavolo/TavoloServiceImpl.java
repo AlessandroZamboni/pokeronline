@@ -6,6 +6,7 @@ import it.prova.pokerrest.repository.tavolo.TavoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class TavoloServiceImpl implements TavoloService {
     }
 
     @Override
-    public Tavolo caricaSingoloAnnuncioEager(Long idTavolo) {
+    public Tavolo caricaSingoloTavoloEager(Long idTavolo) {
         return repository.findSingleTavoloEager(idTavolo);
     }
 
@@ -41,6 +42,7 @@ public class TavoloServiceImpl implements TavoloService {
 
     @Override
     public Tavolo inserisciNuovo(Tavolo tavoloInstance) {
+        tavoloInstance.setDateCreated(new Date());
         return repository.save(tavoloInstance);
     }
 
@@ -53,5 +55,7 @@ public class TavoloServiceImpl implements TavoloService {
     public List<Tavolo> findByExample(Tavolo example) {
         return repository.findByExample(example);
     }
+
+
 
 }

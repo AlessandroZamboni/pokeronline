@@ -1,5 +1,6 @@
 package it.prova.pokerrest.service.utente;
 
+import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.repository.ruolo.RuoloRepository;
 import it.prova.pokerrest.repository.utente.UtenteRepository;
@@ -58,6 +59,28 @@ public class UtenteServiceImpl implements UtenteService {
     @Override
     public Utente findByUsername(String user) {
         return repository.findByUsername(user).orElse(null);
+    }
+
+    @Override
+    public void disabilita(Utente utenteInstance) {
+        utenteInstance.setStato(StatoUtente.DISABILITATO);
+        repository.save(utenteInstance);
+    }
+
+    @Override
+    public void abilita(Utente utenteInstance) {
+        utenteInstance.setStato(StatoUtente.ATTIVO);
+        repository.save(utenteInstance);
+    }
+
+    @Override
+    @Transactional
+    public void lasciaPartita(Utente utenteInstance) {
+        utenteInstance.setTavolo(null);
+        System.out.println("Esperienza prima: "+utenteInstance.getEsperienzaAccumulata());
+        utenteInstance.setEsperienzaAccumulata(utenteInstance.getEsperienzaAccumulata()+1);
+        repository.save(utenteInstance);
+        System.out.println("Tavolo: "+utenteInstance.getTavolo()+"       Esperienza: "+utenteInstance.getEsperienzaAccumulata());
     }
 
 
