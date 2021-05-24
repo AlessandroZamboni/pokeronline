@@ -85,6 +85,7 @@ public class PlayManagementController {
 
     }
 
+    @GetMapping("/lastgame")
     public Tavolo lastGame(@RequestHeader("Authorization") String message) {
         Utente utente = utenteService.findByUsername(message);
 
