@@ -2,9 +2,7 @@ package it.prova.pokerrest.web.api;
 
 import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.Tavolo;
-import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.tavolo.TavoloService;
-import it.prova.pokerrest.service.utente.UtenteService;
 import it.prova.pokerrest.web.api.exception.TavoloNotFoundException;
 import it.prova.pokerrest.web.api.exception.UtenteNotAuthorized;
 import it.prova.pokerrest.web.api.exception.UtenteNotFoundException;
@@ -19,7 +17,7 @@ import java.util.List;
 @RequestMapping("api/tavolo")
 public class TavoloController {
 
-    @Autowired
+    /*@Autowired
     private TavoloService tavoloService;
 
     @Autowired
@@ -116,7 +114,7 @@ public class TavoloController {
             example.setUtenteCreazione(utente);
 
         return tavoloService.findByExample(example);
-    }
+    }*/
 
 
 }

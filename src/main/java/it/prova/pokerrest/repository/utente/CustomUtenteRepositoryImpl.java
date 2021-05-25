@@ -1,7 +1,7 @@
 package it.prova.pokerrest.repository.utente;
 
 import it.prova.pokerrest.model.StatoUtente;
-import it.prova.pokerrest.model.Utente;
+import it.prova.pokerrest.model.User;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,11 +15,11 @@ public class CustomUtenteRepositoryImpl implements CustomUtenteRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Utente> findByExample(Utente example) {
+    public List<User> findByExample(User example) {
         Map<String, Object> paramaterMap = new HashMap<String, Object>();
         List<String> whereClauses = new ArrayList<String>();
 
-        StringBuilder queryBuilder = new StringBuilder("select u from Utente u left join fetch u.ruoli r " +
+        StringBuilder queryBuilder = new StringBuilder("select u from Utente u left join fetch u.authorities a " +
                 "left join fetch u.tavolo t where u.id = u.id ");
 
         if (StringUtils.isNotEmpty(example.getNome())) {
@@ -58,14 +58,14 @@ public class CustomUtenteRepositoryImpl implements CustomUtenteRepository {
             whereClauses.add("u.stato = :stato ");
             paramaterMap.put("stato", example.getStato());
         }
-        if (example.getRuoli() != null && !example.getRuoli().isEmpty()) {
-            whereClauses.add(" r in :ruoli ");
-            paramaterMap.put("ruoli", example.getRuoli());
+        if (example.getAuthorities() != null && !example.getAuthorities().isEmpty()) {
+            whereClauses.add(" a in :authorities ");
+            paramaterMap.put("authorities", example.getAuthorities());
         }
 
         queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
         queryBuilder.append(StringUtils.join(whereClauses, " and "));
-        TypedQuery<Utente> typedQuery = entityManager.createQuery(queryBuilder.toString(), Utente.class);
+        TypedQuery<User> typedQuery = entityManager.createQuery(queryBuilder.toString(), User.class);
 
         for (String key : paramaterMap.keySet()) {
             typedQuery.setParameter(key, paramaterMap.get(key));
@@ -74,16 +74,16 @@ public class CustomUtenteRepositoryImpl implements CustomUtenteRepository {
     }
 
     @Override
-    public Optional<Utente> findOneEager(Long id) {
-        TypedQuery<Utente> query = entityManager
-                .createQuery("select u FROM Utente u left join fetch u.ruoli r where u.id = :idUtente ", Utente.class);
+    public Optional<User> findOneEager(Long id) {
+        TypedQuery<User> query = entityManager
+                .createQuery("select u FROM User u left join fetch u.authorities r where u.id = :idUtente ", User.class);
         query.setParameter("idUtente", id);
         return query.getResultStream().findFirst();
     }
 
     @Override
     public Long countByAdmin() {
-        TypedQuery<Long> query = entityManager.createQuery("select count (u.id) FROM Utente u join u.ruoli r where r.id = 1 and u.stato = 'ATTIVO'",
+        TypedQuery<Long> query = entityManager.createQuery("select count (u.id) FROM User u join u.authorities r where r.id = 1 and u.stato = 'ATTIVO'",
                 Long.class);
         return query.getSingleResult();
     }

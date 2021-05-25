@@ -1,7 +1,7 @@
 package it.prova.pokerrest.service.utente;
 
 import it.prova.pokerrest.model.StatoUtente;
-import it.prova.pokerrest.model.Utente;
+import it.prova.pokerrest.model.User;
 import it.prova.pokerrest.repository.ruolo.RuoloRepository;
 import it.prova.pokerrest.repository.utente.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UtenteServiceImpl implements UtenteService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UtenteRepository repository;
@@ -21,61 +21,61 @@ public class UtenteServiceImpl implements UtenteService {
     private RuoloRepository ruoloRepository;
 
     @Override
-    public List<Utente> listAllElements() {
-        return (List<Utente>) repository.findAll();
+    public List<User> listAllElements() {
+        return (List<User>) repository.findAll();
     }
 
     @Override
-    public Utente caricaSingoloElemento(Long id) {
+    public User caricaSingoloElemento(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Utente caricaSingoloElementoEager(Long id) {
+    public User caricaSingoloElementoEager(Long id) {
         return null;
     }
 
     @Override
-    public Utente aggiorna(Utente utenteInstance) {
+    public User aggiorna(User utenteInstance) {
         return repository.save(utenteInstance);
     }
 
     @Override
-    public Utente inserisciNuovo(Utente utenteInstance) {
+    public User inserisciNuovo(User utenteInstance) {
         utenteInstance.setDateCreated(new Date());
         return repository.save(utenteInstance);
     }
 
     @Override
-    public void rimuovi(Utente utenteInstance) {
+    public void rimuovi(User utenteInstance) {
         repository.delete(utenteInstance);
     }
 
     @Override
-    public List<Utente> findByExample(Utente example) {
+    public List<User> findByExample(User example) {
         return repository.findByExample(example);
     }
 
     @Override
-    public Utente findByUsername(String user) {
+    public User findByUsername(String user) {
         return repository.findByUsername(user).orElse(null);
     }
 
     @Override
-    public void disabilita(Utente utenteInstance) {
+    public void disabilita(User utenteInstance) {
         utenteInstance.setStato(StatoUtente.DISABILITATO);
         repository.save(utenteInstance);
     }
 
     @Override
-    public void abilita(Utente utenteInstance) {
+    public void abilita(User utenteInstance) {
         utenteInstance.setStato(StatoUtente.ATTIVO);
         repository.save(utenteInstance);
     }
 
     @Override
     @Transactional
-    public void lasciaPartita(Utente utenteInstance) {
+    public void lasciaPartita(User utenteInstance) {
         utenteInstance.setTavolo(null);
         System.out.println("Esperienza prima: "+utenteInstance.getEsperienzaAccumulata());
         utenteInstance.setEsperienzaAccumulata(utenteInstance.getEsperienzaAccumulata()+1);

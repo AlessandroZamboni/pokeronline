@@ -7,15 +7,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "utente")
-public class Utente {
+@Table(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,13 +57,15 @@ public class Utente {
     @JoinColumn(name = "tavolo_id")
     private Tavolo tavolo;
 
-    @ManyToMany
-    @JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
-    private Set<Ruolo> ruoli = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USERS_AUTHORITIES", joinColumns = {
+            @JoinColumn(name = "USER_USERNAME", referencedColumnName = "USERNAME") }, inverseJoinColumns = {
+            @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID") })
+    private List<Authority> authorities;
 
-    public Utente() {   }
+    public User() {   }
 
-    public Utente(Long id, String nome, String cognome, String username, String password, StatoUtente stato, Date dateCreated, Double creditoResiduo, Double esperienzaAccumulata, Tavolo tavolo, Set<Ruolo> ruoli) {
+    public User(Long id, String nome, String cognome, String username, String password, StatoUtente stato, Date dateCreated, Double creditoResiduo, Double esperienzaAccumulata, Tavolo tavolo, List<Authority> authorities) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -74,10 +76,10 @@ public class Utente {
         this.creditoResiduo = creditoResiduo;
         this.esperienzaAccumulata = esperienzaAccumulata;
         this.tavolo = tavolo;
-        this.ruoli = ruoli;
+        this.authorities = authorities;
     }
 
-    public Utente(String username, String password, String nome, String cognome, Date dateCreated, Double creditoResiduo, Double esperienzaAccumulata) {
+    public User(String username, String password, String nome, String cognome, Date dateCreated, Double creditoResiduo, Double esperienzaAccumulata) {
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
@@ -167,28 +169,30 @@ public class Utente {
         this.tavolo = tavolo;
     }
 
-    public Set<Ruolo> getRuoli() {
-        return ruoli;
-    }
 
-    public void setRuoli(Set<Ruolo> ruoli) {
-        this.ruoli = ruoli;
-    }
 
     public boolean isAdmin() {
-        for (Ruolo ruoloItem : ruoli) {
-            if (ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
+        for (Authority authorityItem : authorities) {
+            if (authorityItem.getName().equals(AuthorityName.ROLE_ADMIN))
                 return true;
         }
         return false;
     }
 
     public boolean isSpecialPlayer() {
-        for (Ruolo ruoloItem : ruoli) {
-            if (ruoloItem.getCodice().equals(Ruolo.ROLE_SPECIAL_PLAYER))
+        for (Authority authorityItem : authorities) {
+            if (authorityItem.getName().equals(AuthorityName.ROLE_SPECIAL_PLAYER))
                 return true;
         }
         return false;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
@@ -196,21 +200,21 @@ public class Utente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Utente utente = (Utente) o;
+        User user = (User) o;
 
-        if (id != null ? !id.equals(utente.id) : utente.id != null) return false;
-        if (nome != null ? !nome.equals(utente.nome) : utente.nome != null) return false;
-        if (cognome != null ? !cognome.equals(utente.cognome) : utente.cognome != null) return false;
-        if (username != null ? !username.equals(utente.username) : utente.username != null) return false;
-        if (password != null ? !password.equals(utente.password) : utente.password != null) return false;
-        if (stato != utente.stato) return false;
-        if (dateCreated != null ? !dateCreated.equals(utente.dateCreated) : utente.dateCreated != null) return false;
-        if (creditoResiduo != null ? !creditoResiduo.equals(utente.creditoResiduo) : utente.creditoResiduo != null)
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (nome != null ? !nome.equals(user.nome) : user.nome != null) return false;
+        if (cognome != null ? !cognome.equals(user.cognome) : user.cognome != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (stato != user.stato) return false;
+        if (dateCreated != null ? !dateCreated.equals(user.dateCreated) : user.dateCreated != null) return false;
+        if (creditoResiduo != null ? !creditoResiduo.equals(user.creditoResiduo) : user.creditoResiduo != null)
             return false;
-        if (esperienzaAccumulata != null ? !esperienzaAccumulata.equals(utente.esperienzaAccumulata) : utente.esperienzaAccumulata != null)
+        if (esperienzaAccumulata != null ? !esperienzaAccumulata.equals(user.esperienzaAccumulata) : user.esperienzaAccumulata != null)
             return false;
-        if (tavolo != null ? !tavolo.equals(utente.tavolo) : utente.tavolo != null) return false;
-        return ruoli != null ? ruoli.equals(utente.ruoli) : utente.ruoli == null;
+        if (tavolo != null ? !tavolo.equals(user.tavolo) : user.tavolo != null) return false;
+        return authorities != null ? authorities.equals(user.authorities) : user.authorities == null;
     }
 
     @Override
@@ -225,13 +229,13 @@ public class Utente {
         result = 31 * result + (creditoResiduo != null ? creditoResiduo.hashCode() : 0);
         result = 31 * result + (esperienzaAccumulata != null ? esperienzaAccumulata.hashCode() : 0);
         result = 31 * result + (tavolo != null ? tavolo.hashCode() : 0);
-        result = 31 * result + (ruoli != null ? ruoli.hashCode() : 0);
+        result = 31 * result + (authorities != null ? authorities.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Utente{" +
+        return "User{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
