@@ -1,4 +1,4 @@
-package it.prova.pokerrest.service.ruolo;
+package it.prova.pokerrest.service.authority;
 
 import it.prova.pokerrest.model.Authority;
 import it.prova.pokerrest.repository.ruolo.RuoloRepository;

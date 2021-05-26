@@ -1,4 +1,4 @@
-package it.prova.pokerrest.service.utente;
+package it.prova.pokerrest.service.user;
 
 import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.User;

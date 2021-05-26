@@ -2,7 +2,7 @@ package it.prova.pokerrest.web.api;
 
 import it.prova.pokerrest.model.StatoUtente;
 import it.prova.pokerrest.model.User;
-import it.prova.pokerrest.service.utente.UserService;
+import it.prova.pokerrest.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
