@@ -1,8 +1,11 @@
 package it.prova.pokerrest.web.api;
 
 import it.prova.pokerrest.model.Tavolo;
+import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.tavolo.TavoloService;
+import it.prova.pokerrest.service.utente.UtenteService;
 import it.prova.pokerrest.web.api.exception.TavoloNotFoundException;
+import it.prova.pokerrest.web.api.exception.UtenteNotAuthorized;
 import it.prova.pokerrest.web.api.exception.UtenteNotFoundException;
 import it.prova.pokerrest.web.api.exception.UtenteNotInGameException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequestMapping("api/playmanagement")
 public class PlayManagementController {
 
-  /*  @Autowired
+    @Autowired
     private UtenteService utenteService;
 
     @Autowired
@@ -121,7 +124,7 @@ public class PlayManagementController {
         System.out.println("Credito rimanente: "+utente.getCreditoResiduo());
 
         return utente;
-    }*/
+    }
 
 
 }

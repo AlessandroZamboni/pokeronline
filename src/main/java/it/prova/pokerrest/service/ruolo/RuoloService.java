@@ -1,23 +1,23 @@
 package it.prova.pokerrest.service.ruolo;
 
 
-import it.prova.pokerrest.model.Authority;
+import it.prova.pokerrest.model.Ruolo;
 
 import java.util.List;
 
 public interface RuoloService {
-    List<Authority> listAllElements();
+    List<Ruolo> listAllElements();
 
-    Authority caricaSingoloElemento(Long id);
+    Ruolo caricaSingoloElemento(Long id);
 
-    Authority aggiorna(Authority authorityInstance);
+    Ruolo aggiorna(Ruolo ruoloInstance);
 
-    Authority inserisciNuovo(Authority authorityInstance);
+    Ruolo inserisciNuovo(Ruolo ruoloInstance);
 
-    void rimuovi(Authority authorityInstance);
+    void rimuovi(Ruolo ruoloInstance);
 
     //  public List<Acquisto> findByExample(Acquisto example);
-    public Authority cercaPerDescrizioneECodice(String descrizione, String codice) ;
+    public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) ;
 
-    public List<Authority> findByArrayIdParam(String[] ids);
+    public List<Ruolo> findByArrayIdParam(String[] ids);
 }

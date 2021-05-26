@@ -1,7 +1,8 @@
 package it.prova.pokerrest;
 
-import it.prova.pokerrest.model.Authority;
+import it.prova.pokerrest.model.Ruolo;
 import it.prova.pokerrest.model.StatoUtente;
+import it.prova.pokerrest.model.Tavolo;
 import it.prova.pokerrest.model.Utente;
 import it.prova.pokerrest.service.ruolo.RuoloService;
 import it.prova.pokerrest.service.tavolo.TavoloService;
@@ -32,14 +33,14 @@ public class PokerrestApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", "ROLE_ADMIN") == null) {
-			ruoloServiceInstance.inserisciNuovo(new Authority("Administrator", "ROLE_ADMIN"));
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("Administrator", "ROLE_ADMIN"));
 		}
 
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Player User", "ROLE_PLAYER") == null) {
-			ruoloServiceInstance.inserisciNuovo(new Authority("Player User", "ROLE_PLAYER"));
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("Player User", "ROLE_PLAYER"));
 		}
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Special Player User", "ROLE_SPECIAL_PLAYER") == null) {
-			ruoloServiceInstance.inserisciNuovo(new Authority("Special Player User", "ROLE_SPECIAL_PLAYER"));
+			ruoloServiceInstance.inserisciNuovo(new Ruolo("Special Player User", "ROLE_SPECIAL_PLAYER"));
 		}
 
 		// A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO
